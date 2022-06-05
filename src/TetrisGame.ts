@@ -1,6 +1,4 @@
 import { Game } from "./types";
-import LShape from "./tetrominos/LShape";
-import IShape from "./tetrominos/IShape";
 import { CellType } from "./types";
 import TetrominoBlock from "./TetrominoBlock";
 import {
@@ -23,8 +21,8 @@ export class TetrisGame implements Game {
   gridHeight = 10;
   grid = emptyGrid(this.gridWidth, this.gridHeight);
 
-  currentTetromino = LShape.create(this.startingPosition);
-  nextTetromino = IShape.create(this.startingPosition);
+  currentTetromino = randomTetromino(this.startingPosition);
+  nextTetromino = randomTetromino(this.startingPosition);
 
   score = 0;
   level = 0;
@@ -204,8 +202,8 @@ export class TetrisGame implements Game {
   }
 
   private isWithinGrid(column: number, line: number) {
-    const columnValid = column >= 0 && column < this.gridWidth - 1;
-    const lineValid = line >= 0 && line < this.gridHeight - 1;
+    const columnValid = column >= 0 && column <= this.gridWidth - 1;
+    const lineValid = line >= 0 && line <= this.gridHeight - 1;
 
     return columnValid && lineValid;
   }

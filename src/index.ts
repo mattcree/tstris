@@ -17,7 +17,7 @@ const render = (game: Game): void => {
 
 let tetris = new TetrisGame(render);
 
-setInterval(() => tetris.tick(), 1000);
+// setInterval(() => tetris.tick(), 1000);
 
 window.tetris = tetris;
 
