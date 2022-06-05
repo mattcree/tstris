@@ -49,6 +49,7 @@ export type Grid = Array<GridLine>;
 export type Orientation = "North" | "South" | "East" | "West";
 
 export interface Tetromino {
+  orientation: Orientation;
   blocks: Array<MoveableBlock>;
   rotateLeft(): Tetromino;
   rotateRight(): Tetromino;

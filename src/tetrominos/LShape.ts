@@ -9,7 +9,7 @@ import TetrominoBlock from "../TetrominoBlock";
 
   Will be created in the orientation shown above i.e. pointing 'North'
 */
-export class LShape implements Tetromino {
+export default class LShape implements Tetromino {
   blocks: Array<MoveableBlock>;
   orientation: Orientation;
 

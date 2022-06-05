@@ -9,6 +9,11 @@ import {
   MoveableBlock,
   space
 } from "./types";
+import IShape from "./tetrominos/IShape";
+import LShape from "./tetrominos/LShape";
+import OShape from "./tetrominos/OShape";
+
+import { sample } from "lodash";
 
 export const emptyLine = (width: number): GridLine => {
   return new Array(width).fill(space);
@@ -132,3 +137,11 @@ export function blockUnderneath(block: MoveableBlock): number[] {
 
   return [column, line + 1];
 }
+
+export const randomTetromino = (position: MoveableBlock): Tetromino => {
+  return sample([
+    IShape.create(position),
+    LShape.create(position),
+    OShape.create(position)
+  ]);
+};

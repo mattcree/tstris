@@ -1,5 +1,6 @@
 import { Game } from "./types";
-import { LShape } from "./tetrominos/LShape";
+import LShape from "./tetrominos/LShape";
+import IShape from "./tetrominos/IShape";
 import { CellType } from "./types";
 import TetrominoBlock from "./TetrominoBlock";
 import {
@@ -11,7 +12,8 @@ import {
   clearCompleteLines,
   blockOnLeft,
   blockOnRight,
-  blockUnderneath
+  blockUnderneath,
+  randomTetromino
 } from "./utils";
 
 export class TetrisGame implements Game {
@@ -22,7 +24,7 @@ export class TetrisGame implements Game {
   grid = emptyGrid(this.gridWidth, this.gridHeight);
 
   currentTetromino = LShape.create(this.startingPosition);
-  nextTetromino = LShape.create(this.startingPosition);
+  nextTetromino = IShape.create(this.startingPosition);
 
   score = 0;
   level = 0;
@@ -88,7 +90,8 @@ export class TetrisGame implements Game {
 
       this.score = this.score + newScore;
       this.grid = newGrid;
-      this.currentTetromino = LShape.create(this.startingPosition);
+      this.currentTetromino = this.nextTetromino;
+      this.nextTetromino = randomTetromino(this.startingPosition);
     } else {
       this.moveDown();
     }
