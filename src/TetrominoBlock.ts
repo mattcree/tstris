@@ -10,19 +10,19 @@ export default class TetrominoBlock implements MoveableBlock {
     this.line = line;
   }
 
-  left(change: number) {
+  left(change: number = 1) {
     return new TetrominoBlock(this.column - change, this.line);
   }
 
-  right(change: number) {
+  right(change: number = 1) {
     return new TetrominoBlock(this.column + change, this.line);
   }
 
-  up(change: number) {
+  up(change: number = 1) {
     return new TetrominoBlock(this.column, this.line - change);
   }
 
-  down(change: number) {
+  down(change: number = 1) {
     return new TetrominoBlock(this.column, this.line + change);
   }
 }

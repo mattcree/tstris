@@ -13,6 +13,9 @@ import IShape from "./tetrominos/IShape";
 import LShape from "./tetrominos/LShape";
 import OShape from "./tetrominos/OShape";
 import JShape from "./tetrominos/JShape";
+import TShape from "./tetrominos/TShape";
+import SShape from "./tetrominos/SShape";
+import ZShape from "./tetrominos/SShape";
 
 import { sample } from "lodash";
 
@@ -82,14 +85,15 @@ export const gridToString = (grid: Grid): string => {
   return grid.map(gridLineToString).join("\n");
 };
 
-export const calculateScore = (game: Game): number => {
-  const lines = game.grid.filter((line) =>
-    line.every((cell) => cell === frozenBlock)
-  );
+export const linesCleared = (game: Game): number => {
+  return game.grid.filter((line) => line.every((cell) => cell === frozenBlock))
+    .length;
+};
 
-  switch (lines.length) {
-    case 0:
-      return 0;
+export const calculateScore = (game: Game): number => {
+  const newLinesCleared = linesCleared(game);
+
+  switch (newLinesCleared) {
     case 1:
       return LineScore.Single * (game.level + 1);
     case 2:
@@ -141,9 +145,12 @@ export function blockUnderneath(block: MoveableBlock): number[] {
 
 export const randomTetromino = (position: MoveableBlock): Tetromino => {
   return sample([
+    OShape.create(position),
     IShape.create(position),
     LShape.create(position),
-    OShape.create(position),
-    JShape.create(position)
+    JShape.create(position),
+    TShape.create(position),
+    SShape.create(position),
+    ZShape.create(position)
   ]);
 };

@@ -2,23 +2,23 @@ import { MoveableBlock, Orientation, Tetromino } from "../types";
 import TetrominoBlock from "../TetrominoBlock";
 
 /*
-I shaped Tetris block
+Z shaped Tetris block
 
-Spawns in east facing orientation
-[ ][ ][ ][ ]
-[ ][ ][ ][ ]
-[#][*][#][#] 
-[ ][ ][ ][ ]
+Spawns in West facing orientation
+[ ][ ][ ]
+[#][*][ ]
+[ ][#][#] 
+
 
 The '*' indicates the midpoint 
 */
-export default class IShape implements Tetromino {
+export default class ZShape implements Tetromino {
   blocks: Array<MoveableBlock>;
   orientation: Orientation;
   midPoint: MoveableBlock;
 
   static create(midPoint: MoveableBlock = new TetrominoBlock(0, 0)): Tetromino {
-    return IShape.facingEast(midPoint);
+    return ZShape.facingWest(midPoint);
   }
 
   private constructor(
@@ -34,68 +34,68 @@ export default class IShape implements Tetromino {
   rotateLeft() {
     switch (this.orientation) {
       case "North":
-        return IShape.facingEast(this.midPoint);
+        return ZShape.facingWest(this.midPoint);
       default:
-        return IShape.facingNorth(this.midPoint);
+        return ZShape.facingNorth(this.midPoint);
     }
   }
 
   rotateRight() {
     switch (this.orientation) {
       case "North":
-        return IShape.facingEast(this.midPoint);
+        return ZShape.facingWest(this.midPoint);
       default:
-        return IShape.facingNorth(this.midPoint);
+        return ZShape.facingNorth(this.midPoint);
     }
   }
 
-  static facingNorth(midPoint: MoveableBlock): IShape {
-    return new IShape(
+  static facingNorth(midPoint: MoveableBlock): ZShape {
+    return new ZShape(
       midPoint,
       [
-        midPoint.up(2), // Top
-        midPoint.up(), // Middle
-        midPoint, // Bottom
-        midPoint.down() // Right
+        midPoint.up(), // Top
+        midPoint, // Middle
+        midPoint.left(), // Bottom
+        midPoint.left().down() // Right
       ],
       "North"
     );
   }
 
-  static facingEast(midPoint: MoveableBlock): IShape {
-    return new IShape(
+  static facingWest(midPoint: MoveableBlock): ZShape {
+    return new ZShape(
       midPoint,
       [
-        midPoint.right(2), // Top
-        midPoint.right(), // Middle
-        midPoint, // Bottom
-        midPoint.left() // Right
+        midPoint.left(), // Top
+        midPoint, // Middle
+        midPoint.down(), // Bottom
+        midPoint.down().right() // Right
       ],
-      "East"
+      "West"
     );
   }
 
   moveLeft() {
     const newCoordinates = this.blocks.map((block) => block.left(1));
-    return new IShape(this.midPoint.left(), newCoordinates, this.orientation);
+    return new ZShape(this.midPoint.left(), newCoordinates, this.orientation);
   }
 
   moveRight() {
     const newCoordinates = this.blocks.map((block) => block.right(1));
-    return new IShape(this.midPoint.right(), newCoordinates, this.orientation);
+    return new ZShape(this.midPoint.right(), newCoordinates, this.orientation);
   }
 
   moveDown() {
     const newCoordinates = this.blocks.map((block) => block.down(1));
-    return new IShape(this.midPoint.down(), newCoordinates, this.orientation);
+    return new ZShape(this.midPoint.down(), newCoordinates, this.orientation);
   }
 
   toString() {
     switch (this.orientation) {
       case "North":
-        return "[ ][#][ ][ ]\n[ ][#][ ][ ]\n[ ][*][ ][ ]\n[ ][#][ ][ ]";
+        return "[ ][#][ ]\n[#][*][ ]\n[#][ ][ ]";
       default:
-        return "[ ][ ][ ][ ]\n[ ][ ][ ][ ]\n[#][*][#][#]\n[ ][ ][ ][ ]";
+        return "[ ][ ][ ]\n[#][*][ ]\n[ ][#][#]";
     }
   }
 }

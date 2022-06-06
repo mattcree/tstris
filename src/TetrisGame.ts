@@ -1,5 +1,5 @@
-import { Game } from "./types";
-import { CellType } from "./types";
+import { Game, MoveableBlock } from "./types";
+import { CellType, Grid, Tetromino, GameTapFn } from "./types";
 import TetrominoBlock from "./TetrominoBlock";
 import {
   emptyGrid,
@@ -7,6 +7,7 @@ import {
   updateGrid,
   gridToString,
   calculateScore,
+  linesCleared,
   clearCompleteLines,
   blockOnLeft,
   blockOnRight,
@@ -14,23 +15,55 @@ import {
   randomTetromino
 } from "./utils";
 
-export class TetrisGame implements Game {
-  startingPosition = new TetrominoBlock(4, -2);
+interface TetrisGameParams {
+  gridWidth: number;
+  gridHeight: number;
+}
 
-  gridWidth = 10;
-  gridHeight = 10;
-  grid = emptyGrid(this.gridWidth, this.gridHeight);
-
-  currentTetromino = randomTetromino(this.startingPosition);
-  nextTetromino = randomTetromino(this.startingPosition);
-
+export default class TetrisGame implements Game {
+  grid: Grid;
+  gridHeight: number;
+  gridWidth: number;
+  startingPosition: MoveableBlock;
+  currentTetromino: Tetromino;
+  nextTetromino: Tetromino;
   score = 0;
   level = 0;
+  linesCleared = 0;
+  gameOver = false;
 
-  onChange: (game: Game) => void;
+  gridChangeListeners: GameTapFn[] = [];
+  levelChangeListeners: GameTapFn[] = [];
+  gameOverListeners: GameTapFn[] = [];
 
-  constructor(onChange: (game: Game) => void) {
-    this.onChange = onChange;
+  constructor({ gridWidth, gridHeight }: TetrisGameParams) {
+    this.gridWidth = gridWidth;
+    this.gridHeight = gridHeight;
+    this.grid = emptyGrid(gridWidth, gridHeight);
+
+    const midPoint = Math.floor(gridWidth / 2);
+
+    this.startingPosition = new TetrominoBlock(midPoint, -2);
+    this.currentTetromino = randomTetromino(this.startingPosition);
+    this.nextTetromino = randomTetromino(this.startingPosition);
+  }
+
+  addGridChangeListener(fn: GameTapFn): Game {
+    this.gridChangeListeners.push(fn);
+
+    return this;
+  }
+
+  addLevelChangeListener(fn: GameTapFn): Game {
+    this.levelChangeListeners.push(fn);
+
+    return this;
+  }
+
+  addGameOverListener(fn: GameTapFn): Game {
+    this.gameOverListeners.push(fn);
+
+    return this;
   }
 
   rotateRight() {
@@ -78,23 +111,45 @@ export class TetrisGame implements Game {
   }
 
   tick() {
-    if (this.isCurrentTetrominoToBeFrozen()) {
+    if (this.isCurrentTetrominoToBeFrozen() && this.isOutsideGrid()) {
+      this.gameOverListeners.forEach((listener) => listener(this));
+      this.gameOver = true;
+    } else if (this.isCurrentTetrominoToBeFrozen()) {
       // At this point if any tetromino block is outside the grid
       // it is game over
       this.grid = freezeGrid(this.grid);
 
+      const newLinesCleared = linesCleared(this);
       const newScore = calculateScore(this);
       const newGrid = clearCompleteLines(this);
 
       this.score = this.score + newScore;
+      this.linesCleared = this.linesCleared + newLinesCleared;
       this.grid = newGrid;
       this.currentTetromino = this.nextTetromino;
       this.nextTetromino = randomTetromino(this.startingPosition);
+
+      const newLevel = this.calculateLevel();
+
+      if (newLevel !== this.level) {
+        this.level = newLevel;
+        this.levelChangeListeners.forEach((listener) => listener(this));
+      }
     } else {
       this.moveDown();
     }
 
     this.updateAndNotify();
+  }
+
+  private calculateLevel() {
+    return Math.floor(this.linesCleared / 10);
+  }
+
+  private isOutsideGrid() {
+    return this.currentTetromino.blocks.find(
+      (block) => !this.isWithinGrid(block.column, block.line)
+    );
   }
 
   private isCurrentTetrominoToBeFrozen() {
@@ -210,7 +265,7 @@ export class TetrisGame implements Game {
 
   updateAndNotify() {
     this.grid = updateGrid(this.grid, this.currentTetromino);
-    this.onChange(this);
+    this.gridChangeListeners.forEach((listener) => listener(this));
   }
 
   toString() {

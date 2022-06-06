@@ -2,12 +2,24 @@
   <head>
     <title>Parcel Sandbox</title>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="src/styles.css" />
   </head>
 
   <body>
-    <pre id="grid"></pre>
-    <div id="score"></div>
-    <div id="debug"></div>
+    <div id="game-container">
+      <div id="grid-container">
+        <pre id="grid"></pre>
+      </div>
+
+      <div id="game-state-container">
+        <div id="score"></div>
+        <div id="level"></div>
+        <div id="cleared"></div>
+        <pre id="next"></pre>
+      </div>
+
+      <div id="game-over"></div>
+    </div>
 
     <script src="src/index.ts"></script>
   </body>

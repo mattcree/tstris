@@ -1,3 +1,21 @@
 body {
   font-family: sans-serif;
+  font-weight: bold;
+  color: green;
+  background-color: black;
+}
+
+#game-container {
+  width: 70%;
+  margin: auto;
+}
+
+#grid-container {
+  display: inline-block;
+  padding: 1rem;
+}
+
+#game-state-container {
+  display: inline-block;
+  padding: 1rem;
 }

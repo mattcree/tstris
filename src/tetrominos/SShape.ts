@@ -2,23 +2,23 @@ import { MoveableBlock, Orientation, Tetromino } from "../types";
 import TetrominoBlock from "../TetrominoBlock";
 
 /*
-I shaped Tetris block
+S shaped Tetris block
 
-Spawns in east facing orientation
-[ ][ ][ ][ ]
-[ ][ ][ ][ ]
-[#][*][#][#] 
-[ ][ ][ ][ ]
+Spawns in East facing orientation
+[ ][ ][ ]
+[ ][*][#]
+[#][#][ ] 
+
 
 The '*' indicates the midpoint 
 */
-export default class IShape implements Tetromino {
+export default class SShape implements Tetromino {
   blocks: Array<MoveableBlock>;
   orientation: Orientation;
   midPoint: MoveableBlock;
 
   static create(midPoint: MoveableBlock = new TetrominoBlock(0, 0)): Tetromino {
-    return IShape.facingEast(midPoint);
+    return SShape.facingEast(midPoint);
   }
 
   private constructor(
@@ -34,27 +34,27 @@ export default class IShape implements Tetromino {
   rotateLeft() {
     switch (this.orientation) {
       case "North":
-        return IShape.facingEast(this.midPoint);
+        return SShape.facingEast(this.midPoint);
       default:
-        return IShape.facingNorth(this.midPoint);
+        return SShape.facingNorth(this.midPoint);
     }
   }
 
   rotateRight() {
     switch (this.orientation) {
       case "North":
-        return IShape.facingEast(this.midPoint);
+        return SShape.facingEast(this.midPoint);
       default:
-        return IShape.facingNorth(this.midPoint);
+        return SShape.facingNorth(this.midPoint);
     }
   }
 
-  static facingNorth(midPoint: MoveableBlock): IShape {
-    return new IShape(
+  static facingNorth(midPoint: MoveableBlock): SShape {
+    return new SShape(
       midPoint,
       [
-        midPoint.up(2), // Top
-        midPoint.up(), // Middle
+        midPoint.left().up(), // Top
+        midPoint.left(), // Middle
         midPoint, // Bottom
         midPoint.down() // Right
       ],
@@ -62,14 +62,14 @@ export default class IShape implements Tetromino {
     );
   }
 
-  static facingEast(midPoint: MoveableBlock): IShape {
-    return new IShape(
+  static facingEast(midPoint: MoveableBlock): SShape {
+    return new SShape(
       midPoint,
       [
-        midPoint.right(2), // Top
-        midPoint.right(), // Middle
-        midPoint, // Bottom
-        midPoint.left() // Right
+        midPoint.right(), // Top
+        midPoint, // Middle
+        midPoint.down(), // Bottom
+        midPoint.down().left() // Right
       ],
       "East"
     );
@@ -77,25 +77,25 @@ export default class IShape implements Tetromino {
 
   moveLeft() {
     const newCoordinates = this.blocks.map((block) => block.left(1));
-    return new IShape(this.midPoint.left(), newCoordinates, this.orientation);
+    return new SShape(this.midPoint.left(), newCoordinates, this.orientation);
   }
 
   moveRight() {
     const newCoordinates = this.blocks.map((block) => block.right(1));
-    return new IShape(this.midPoint.right(), newCoordinates, this.orientation);
+    return new SShape(this.midPoint.right(), newCoordinates, this.orientation);
   }
 
   moveDown() {
     const newCoordinates = this.blocks.map((block) => block.down(1));
-    return new IShape(this.midPoint.down(), newCoordinates, this.orientation);
+    return new SShape(this.midPoint.down(), newCoordinates, this.orientation);
   }
 
   toString() {
     switch (this.orientation) {
       case "North":
-        return "[ ][#][ ][ ]\n[ ][#][ ][ ]\n[ ][*][ ][ ]\n[ ][#][ ][ ]";
+        return "[#][ ][ ]\n[#][*][ ]\n[ ][#][ ]";
       default:
-        return "[ ][ ][ ][ ]\n[ ][ ][ ][ ]\n[#][*][#][#]\n[ ][ ][ ][ ]";
+        return "[ ][ ][ ]\n[ ][*][#]\n[#][#][ ]";
     }
   }
 }

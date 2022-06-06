@@ -33,10 +33,10 @@ export class FrozenBlock implements Cell {
 export const frozenBlock = new FrozenBlock();
 
 export interface MoveableBlock extends Cell, Positionable {
-  left(change: number): MoveableBlock;
-  right(change: number): MoveableBlock;
-  up(change: number): MoveableBlock;
-  down(change: number): MoveableBlock;
+  left(change?: number): MoveableBlock;
+  right(change?: number): MoveableBlock;
+  up(change?: number): MoveableBlock;
+  down(change?: number): MoveableBlock;
   toString(): string;
 }
 
@@ -51,6 +51,7 @@ export type Orientation = "North" | "South" | "East" | "West";
 export interface Tetromino {
   orientation: Orientation;
   blocks: Array<MoveableBlock>;
+  midPoint: MoveableBlock;
   rotateLeft(): Tetromino;
   rotateRight(): Tetromino;
   moveLeft(): Tetromino;
@@ -62,7 +63,9 @@ export interface Game {
   gridWidth: number;
   gridHeight: number;
   score: number;
+  linesCleared: number;
   level: number;
+  gameOver: boolean;
   currentTetromino: Tetromino;
   nextTetromino: Tetromino;
   grid: Grid;
@@ -72,4 +75,9 @@ export interface Game {
   moveLeft(): void;
   moveRight(): void;
   moveDown(): void;
+  addGridChangeListener: (fn: (game: Game) => void) => Game;
+  addLevelChangeListener: (fn: (game: Game) => void) => Game;
+  addGameOverListener: (fn: (game: Game) => void) => Game;
 }
+
+export type GameTapFn = (game: Game) => void;

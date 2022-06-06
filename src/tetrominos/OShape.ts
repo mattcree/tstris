@@ -2,32 +2,33 @@ import { MoveableBlock, Orientation, Tetromino } from "../types";
 import TetrominoBlock from "../TetrominoBlock";
 
 /*
-  Shape:
-    ##
-    ##
+O shaped Tetris block
 
-  Will be created in the orientation shown above i.e. pointing 'North'
+Spawns in North facing orientation (the only orientation)
+[ ][ ][ ][ ]
+[ ][*][#][ ]
+[ ][#][#][ ] 
+[ ][ ][ ][ ]
+
+
+The '*' indicates the midpoint 
 */
 export default class OShape implements Tetromino {
   blocks: Array<MoveableBlock>;
   orientation: Orientation;
+  midPoint: MoveableBlock;
 
-  static create(
-    startingCoordinate: MoveableBlock = new TetrominoBlock(0, 0)
-  ): Tetromino {
-    return new OShape(
-      [
-        startingCoordinate, // Top
-        startingCoordinate.right(1), // Middle
-        startingCoordinate.right(1).down(1), // Bottom
-        startingCoordinate.down(1) // Right of Bottom
-      ],
-      "North"
-    );
+  static create(midPoint: MoveableBlock = new TetrominoBlock(0, 0)): Tetromino {
+    return OShape.facingNorth(midPoint);
   }
 
-  private constructor(blocks: Array<MoveableBlock>, orientation: Orientation) {
+  private constructor(
+    midpoint: MoveableBlock,
+    blocks: Array<MoveableBlock>,
+    orientation: Orientation
+  ) {
     this.blocks = blocks;
+    this.midPoint = midpoint;
     this.orientation = orientation;
   }
 
@@ -39,22 +40,32 @@ export default class OShape implements Tetromino {
     return this;
   }
 
+  static facingNorth(midPoint: MoveableBlock): OShape {
+    return new OShape(
+      midPoint,
+      [
+        midPoint, // Top
+        midPoint.down(), // Middle
+        midPoint.down().right(), // Bottom
+        midPoint.right() // Right
+      ],
+      "North"
+    );
+  }
+
   moveLeft() {
-    const newCoordinates = this.blocks.map((block) => block.left(1));
-    return new OShape(newCoordinates, this.orientation);
+    return OShape.facingNorth(this.midPoint.left());
   }
 
   moveRight() {
-    const newCoordinates = this.blocks.map((block) => block.right(1));
-    return new OShape(newCoordinates, this.orientation);
+    return OShape.facingNorth(this.midPoint.right());
   }
 
   moveDown() {
-    const newCoordinates = this.blocks.map((block) => block.down(1));
-    return new OShape(newCoordinates, this.orientation);
+    return OShape.facingNorth(this.midPoint.down());
   }
 
   toString() {
-    return JSON.stringify(this.blocks, null, 2);
+    return "[ ][ ][ ][ ]\n[ ][*][#][ ]\n[ ][#][#][ ]\n[ ][ ][ ][ ]";
   }
 }
