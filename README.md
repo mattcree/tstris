@@ -2,9 +2,9 @@
 
 An implementation of Tetris using Typescript
 
-## Description
+## Running
 
-A simple Object Oriented implementation of Tetris.
+Open `index.html`
 
 Currently Implemented
 
@@ -14,6 +14,13 @@ Currently Implemented
 - Lines cleared
 - Game over
 
-The rotation system is similar to the Nintendo.
+The rotation system is similar to Tetris on Nintendo Entertainment System.
 
-![Rotation concept](/rotation.png "Tetromino rotation")
+### Tetrominos and Rotation
+
+When created, a Tetromino is in a given 'orientation' (North, South, East, or West).
+
+The following image is more or less how I envisioned the 'orientation'
+that the piece is in.
+
+![Tetromino rotation](/rotation.png "Tetromino rotation")
