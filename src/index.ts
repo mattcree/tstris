@@ -1,6 +1,6 @@
 import { Game } from "./types";
-import TetrisGame from "./TetrisGame";
-import TetrisGameSession from "./TetrisGameSession";
+import TetrisGame from "./game/TetrisGame";
+import TetrisGameSession from "./game/TetrisGameSession";
 
 const render = (game: Game): void => {
   const gridContainer = document.getElementById("grid");
@@ -42,9 +42,6 @@ let tetris = new TetrisGame({
 let tetrisGameSession = new TetrisGameSession({
   game: tetris
 });
-
-window.tetris = tetris;
-window.tgs = tetrisGameSession;
 
 document.addEventListener("keypress", (event) => {
   switch (event.key) {

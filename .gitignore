@@ -1,0 +1,5 @@
+# Node related stuff
+node_modules
+
+# Other
+.cache

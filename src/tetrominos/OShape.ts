@@ -1,5 +1,5 @@
 import { MoveableBlock, Orientation, Tetromino } from "../types";
-import TetrominoBlock from "../TetrominoBlock";
+import TetrominoBlock from "./TetrominoBlock";
 
 /*
 O shaped Tetris block

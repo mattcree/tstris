@@ -2,11 +2,21 @@
 
 An implementation of Tetris using Typescript
 
-## Running
+## Running for Production
 
-Open `index.html`
+Open `dist/index.html` to view the current build of the game.
 
-Currently Implemented
+## Running for Development
+
+`$ npm run start`
+
+## Building
+
+`$ npm run build`
+
+The built artefacts should end up in the `dist` directory.
+
+# Currently Implemented
 
 - Grid
 - All tetrominos (O, I, S, Z, T, L, J)
@@ -16,7 +26,7 @@ Currently Implemented
 
 The rotation system is similar to Tetris on Nintendo Entertainment System.
 
-### Tetrominos and Rotation
+## Tetrominos and Rotation
 
 When created, a Tetromino is in a given 'orientation' (North, South, East, or West).
 

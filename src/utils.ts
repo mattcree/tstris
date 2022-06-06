@@ -154,5 +154,5 @@ export const randomTetromino = (position: MoveableBlock): Tetromino => {
     TShape.create(position),
     SShape.create(position),
     ZShape.create(position)
-  ]);
+  ]) as unknown as Tetromino;
 };
