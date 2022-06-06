@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "start": "parcel src/index.html --open",
-    "build": "parcel build src/index.html"
+    "start": "parcel index.html --open",
+    "build": "parcel build --public-url . index.html"
   },
   "dependencies": {
     "lodash": "4.17.21",
