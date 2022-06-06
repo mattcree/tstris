@@ -20,12 +20,12 @@ const render = (game: Game): void => {
 
   const linesClearedContainer = document.getElementById("cleared");
   if (linesClearedContainer && game) {
-    linesClearedContainer.innerHTML = `Lines Cleared: ${game.linesCleared.toString()}`;
+    linesClearedContainer.innerHTML = `Lines: ${game.linesCleared.toString()}`;
   }
 
   const nextContainer = document.getElementById("next");
   if (nextContainer && game) {
-    nextContainer.innerHTML = `Next:\n${game.nextTetromino.toString()}`;
+    nextContainer.innerHTML = `${game.nextTetromino.toString()}`;
   }
 
   const gameOverContainer = document.getElementById("game-over");

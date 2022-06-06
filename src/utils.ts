@@ -67,18 +67,20 @@ export function freezeGrid(grid: Grid): Grid {
 }
 
 export const gridLineToString = (gridLine: GridLine): string => {
-  return gridLine
-    .map((cell: GridElement) => {
-      switch (cell.type) {
-        case CellType.Frozen:
-          return "[*]";
-        case CellType.Moveable:
-          return "[#]";
-        default:
-          return "[ ]";
-      }
-    })
-    .join("");
+  return (
+    gridLine
+      .map((cell: GridElement) => {
+        switch (cell.type) {
+          case CellType.Frozen:
+            return "|*";
+          case CellType.Moveable:
+            return "|#";
+          default:
+            return "| ";
+        }
+      })
+      .join("") + "|"
+  );
 };
 
 export const gridToString = (grid: Grid): string => {

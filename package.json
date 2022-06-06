@@ -18,7 +18,5 @@
     "@babel/preset-env": "7.13.8"
   },
   "keywords": [],
-  "lib": [
-    "es2019"
-  ]
+  "lib": ["es2016"]
 }
