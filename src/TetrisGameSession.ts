@@ -14,6 +14,8 @@ export default class TetrisGameSession {
     this.game = game
       .addLevelChangeListener(() => this.nextLevel())
       .addGameOverListener(() => this.gameOver());
+
+    this.start();
   }
 
   start() {
@@ -29,7 +31,11 @@ export default class TetrisGameSession {
   }
 
   tickInterval() {
-    return (this.game.level + 1) * ONE_SECOND_MS;
+    const timeRemovalFactor = this.game.level / 4;
+
+    const timeToRemove = parseFloat(`1.${timeRemovalFactor}`) * 100;
+
+    return ONE_SECOND_MS - timeToRemove;
   }
 
   nextLevel() {

@@ -82,7 +82,9 @@ export default class TetrisGame implements Game {
 
   moveRight() {
     const canGoRight =
-      !this.isTouchingRightEdge() && !this.isRightSideTouchingAFrozenBlock();
+      !this.gameOver &&
+      !this.isTouchingRightEdge() &&
+      !this.isRightSideTouchingAFrozenBlock();
 
     if (canGoRight) {
       this.currentTetromino = this.currentTetromino.moveRight();
@@ -92,7 +94,9 @@ export default class TetrisGame implements Game {
 
   moveLeft() {
     const canGoLeft =
-      !this.isTouchingLeftEdge() && !this.isLeftSideTouchingAFrozenBlock();
+      !this.gameOver &&
+      !this.isTouchingLeftEdge() &&
+      !this.isLeftSideTouchingAFrozenBlock();
 
     if (canGoLeft) {
       this.currentTetromino = this.currentTetromino.moveLeft();
@@ -102,7 +106,9 @@ export default class TetrisGame implements Game {
 
   moveDown() {
     const canGoDown =
-      !this.isTouchingBottom() && !this.isBottomTouchingAFrozenBlock();
+      !this.gameOver &&
+      !this.isTouchingBottom() &&
+      !this.isBottomTouchingAFrozenBlock();
 
     if (canGoDown) {
       this.currentTetromino = this.currentTetromino.moveDown();
@@ -212,6 +218,8 @@ export default class TetrisGame implements Game {
   }
 
   private isLeftRotationBlocked() {
+    if (this.gameOver) return true;
+
     const rotated = this.currentTetromino.rotateLeft();
 
     const overEdge = rotated.blocks.filter(
@@ -235,6 +243,8 @@ export default class TetrisGame implements Game {
   }
 
   private isRightRotationBlocked() {
+    if (this.gameOver) return true;
+
     const rotated = this.currentTetromino.rotateRight();
     const overEdge = rotated.blocks.filter(
       (block) =>

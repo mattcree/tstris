@@ -1,7 +1,6 @@
 import { Game } from "./types";
 import TetrisGame from "./TetrisGame";
 import TetrisGameSession from "./TetrisGameSession";
-import * as styles from "./styles.css";
 
 const render = (game: Game): void => {
   const gridContainer = document.getElementById("grid");
@@ -22,6 +21,11 @@ const render = (game: Game): void => {
   const linesClearedContainer = document.getElementById("cleared");
   if (linesClearedContainer && game) {
     linesClearedContainer.innerHTML = `Lines Cleared: ${game.linesCleared.toString()}`;
+  }
+
+  const nextContainer = document.getElementById("next");
+  if (nextContainer && game) {
+    nextContainer.innerHTML = `Next:\n${game.nextTetromino.toString()}`;
   }
 
   const gameOverContainer = document.getElementById("game-over");
