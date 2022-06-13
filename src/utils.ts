@@ -17,7 +17,7 @@ import TShape from "./tetrominos/TShape";
 import SShape from "./tetrominos/SShape";
 import ZShape from "./tetrominos/SShape";
 
-import { sample } from "lodash";
+import { first, sample } from "lodash";
 
 export const emptyLine = (width: number): GridLine => {
   return new Array(width).fill(space);
@@ -82,8 +82,18 @@ export const gridLineToString = (gridLine: GridLine): string => {
 };
 
 export const gridToString = (grid: Grid): string => {
-  return grid.map(gridLineToString).join("\n");
+  const [firstLine] = grid;
+  const lines = grid.map(gridLineToString);
+
+  const top = repeatString("__", firstLine.length + 1);
+  const bottom = repeatString("‾‾", firstLine.length + 1);
+
+  return [top, ...lines, bottom].join("\n");
 };
+
+const repeatString = (character: string, times: number) => {
+  return new Array(times).fill(character).join("");
+}
 
 export const linesCleared = (game: Game): number => {
   return game.grid.filter((line) => line.every((cell) => cell === frozenBlock))
