@@ -126,13 +126,13 @@ export default class LShape implements Tetromino {
   toString() {
     switch (this.orientation) {
       case "North":
-        return "[ ][#][ ]\n[ ][*][ ]\n[ ][#][#]";
+        return "  []  \n  []  \n  [][]";
       case "South":
-        return "[#][#][ ]\n[ ][#][ ]\n[ ][#][ ]";
+        return "[][]  \n  []  \n  []  ";
       case "East":
-        return "[#][ ][ ]\n[#][#][#]\n[ ][ ][ ]";
+        return "[]    \n[][][]\n      ";
       case "West":
-        return "[ ][ ][#]\n[#][#][#]\n[ ][ ][ ]";
+        return "    []\n[][][]\n      ";
     }
   }
 }

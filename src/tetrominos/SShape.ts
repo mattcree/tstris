@@ -93,9 +93,9 @@ export default class SShape implements Tetromino {
   toString() {
     switch (this.orientation) {
       case "North":
-        return "[#][ ][ ]\n[#][*][ ]\n[ ][#][ ]";
+        return "[]    \n[][]  \n  []  ";
       default:
-        return "[ ][ ][ ]\n[ ][*][#]\n[#][#][ ]";
+        return "      \n  [][]\n[][]  ";
     }
   }
 }

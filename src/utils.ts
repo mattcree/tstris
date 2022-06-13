@@ -67,20 +67,18 @@ export function freezeGrid(grid: Grid): Grid {
 }
 
 export const gridLineToString = (gridLine: GridLine): string => {
-  return (
-    gridLine
-      .map((cell: GridElement) => {
-        switch (cell.type) {
-          case CellType.Frozen:
-            return "|*";
-          case CellType.Moveable:
-            return "|#";
-          default:
-            return "| ";
-        }
-      })
-      .join("") + "|"
-  );
+  const line = gridLine.map((cell: GridElement) => {
+    switch (cell.type) {
+      case CellType.Frozen:
+        return "[]";
+      case CellType.Moveable:
+        return "[]";
+      default:
+        return "  ";
+    }
+  });
+
+  return ["|", ...line, "|"].join("");
 };
 
 export const gridToString = (grid: Grid): string => {
@@ -146,7 +144,7 @@ export function blockUnderneath(block: MoveableBlock): number[] {
 }
 
 export const randomTetromino = (position: MoveableBlock): Tetromino => {
-  return sample([
+  return (sample([
     OShape.create(position),
     IShape.create(position),
     LShape.create(position),
@@ -154,5 +152,5 @@ export const randomTetromino = (position: MoveableBlock): Tetromino => {
     TShape.create(position),
     SShape.create(position),
     ZShape.create(position)
-  ]) as unknown as Tetromino;
+  ]) as unknown) as Tetromino;
 };
