@@ -14,18 +14,17 @@ pre, div {
   margin: auto;
   width: fit-content;
   height: 100vh;
-  
 }
 
 #grid-container {
   display: inline-block;
-  text-align: left;
+  text-align: center;
 }
 
 #game-state-container {
   display: inline-block;
   vertical-align: top;
-  text-align: left;
+  text-align: center;
 }
 
 #instructions {
