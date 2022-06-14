@@ -4,7 +4,7 @@ interface TetrisGameSessionParams {
   game: Game;
 }
 
-const ONE_SECOND_MS = 1000;
+const BASE_TICK_MS = 600;
 
 export default class TetrisGameSession {
   timeoutId?: number;
@@ -33,7 +33,7 @@ export default class TetrisGameSession {
   tickInterval() {
     const timeToRemove = 1 + this.game.level / 4 * 200;
 
-    return 600 - timeToRemove;
+    return BASE_TICK_MS - timeToRemove;
   }
 
   nextLevel() {

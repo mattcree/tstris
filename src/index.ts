@@ -21,22 +21,7 @@ const render = (game: Game): void => {
     ].join("\n")
     gameInfoContainer.innerHTML = inBox(gameInfo);
   }
-
-  // const scoreContainer = document.getElementById("score");
-  // if (scoreContainer && game) {
-  //   scoreContainer.innerHTML = `Score: ${game.score.toString()}`;
-  // }
-
-  // const levelContainer = document.getElementById("level");
-  // if (levelContainer && game) {
-  //   levelContainer.innerHTML = `Level: ${game.level.toString()}`;
-  // }
-
-  // const linesClearedContainer = document.getElementById("cleared");
-  // if (linesClearedContainer && game) {
-  //   linesClearedContainer.innerHTML = `Lines: ${game.linesCleared.toString()}`;
-  // }
-
+  
   const nextContainer = document.getElementById("next");
   if (nextContainer && game) {
     nextContainer.innerHTML = `${inBox(game.nextTetromino.toString())}`;
