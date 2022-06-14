@@ -66,6 +66,11 @@ export default class OShape implements Tetromino {
   }
 
   toString() {
-    return "        \n  [][]  \n  [][]  \n        ";
+    return [
+      "        ",
+      "  [][]  ",
+      "  [][]  ",
+      "        "
+    ].join("\n");
   }
 }

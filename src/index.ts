@@ -1,6 +1,7 @@
 import { Game } from "./types";
 import TetrisGame from "./game/TetrisGame";
 import TetrisGameSession from "./game/TetrisGameSession";
+import {inBox} from "./utils"
 
 const render = (game: Game): void => {
   const gridContainer = document.getElementById("grid");
@@ -8,24 +9,37 @@ const render = (game: Game): void => {
     gridContainer.innerHTML = game.toString();
   }
 
-  const scoreContainer = document.getElementById("score");
-  if (scoreContainer && game) {
-    scoreContainer.innerHTML = `Score: ${game.score.toString()}`;
+  const gameInfoContainer = document.getElementById("game-info");
+  if (gameInfoContainer && game) {
+    const gameInfo = [
+      "Score:",
+      game.score.toString(),
+      "Level:",
+      game.level.toString(),
+      "Lines:",
+      game.linesCleared.toString(),
+    ].join("\n")
+    gameInfoContainer.innerHTML = inBox(gameInfo);
   }
 
-  const levelContainer = document.getElementById("level");
-  if (levelContainer && game) {
-    levelContainer.innerHTML = `Level: ${game.level.toString()}`;
-  }
+  // const scoreContainer = document.getElementById("score");
+  // if (scoreContainer && game) {
+  //   scoreContainer.innerHTML = `Score: ${game.score.toString()}`;
+  // }
 
-  const linesClearedContainer = document.getElementById("cleared");
-  if (linesClearedContainer && game) {
-    linesClearedContainer.innerHTML = `Lines: ${game.linesCleared.toString()}`;
-  }
+  // const levelContainer = document.getElementById("level");
+  // if (levelContainer && game) {
+  //   levelContainer.innerHTML = `Level: ${game.level.toString()}`;
+  // }
+
+  // const linesClearedContainer = document.getElementById("cleared");
+  // if (linesClearedContainer && game) {
+  //   linesClearedContainer.innerHTML = `Lines: ${game.linesCleared.toString()}`;
+  // }
 
   const nextContainer = document.getElementById("next");
   if (nextContainer && game) {
-    nextContainer.innerHTML = `${game.nextTetromino.toString()}`;
+    nextContainer.innerHTML = `${inBox(game.nextTetromino.toString())}`;
   }
 
   const gameOverContainer = document.getElementById("game-over");

@@ -31,11 +31,9 @@ export default class TetrisGameSession {
   }
 
   tickInterval() {
-    const timeRemovalFactor = this.game.level / 4;
+    const timeToRemove = 1 + this.game.level / 4 * 200;
 
-    const timeToRemove = parseFloat(`1.${timeRemovalFactor}`) * 100;
-
-    return ONE_SECOND_MS - timeToRemove;
+    return 600 - timeToRemove;
   }
 
   nextLevel() {
