@@ -13,10 +13,10 @@ pre, div {
 #game-container {
   margin: auto;
   width: fit-content;
-  height: 100vh;
+  height: 90%;
 }
 
-#grid-container {
+/* #grid-container {
   display: inline-block;
   text-align: center;
 }
@@ -26,7 +26,11 @@ pre, div {
   vertical-align: top;
   text-align: center;
 }
+*/
+#title {
+  font-size: 1.5em;
+}
 
-#instructions {
+#title, #instructions {
   text-align: center;
 }

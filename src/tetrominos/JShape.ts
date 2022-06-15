@@ -82,7 +82,7 @@ export default class JShape implements Tetromino {
     );
   }
 
-  static facingEast(midPoint: MoveableBlock): JShape {
+  static facingWest(midPoint: MoveableBlock): JShape {
     return new JShape(
       midPoint,
       [
@@ -91,11 +91,11 @@ export default class JShape implements Tetromino {
         midPoint.right(), // Bottom
         midPoint.right().down() // Right
       ],
-      "East"
+      "West"
     );
   }
 
-  static facingWest(midPoint: MoveableBlock): JShape {
+  static facingEast(midPoint: MoveableBlock): JShape {
     return new JShape(
       midPoint,
       [
@@ -104,7 +104,7 @@ export default class JShape implements Tetromino {
         midPoint.left(), // Bottom
         midPoint.left().up() // Right
       ],
-      "West"
+      "East"
     );
   }
 

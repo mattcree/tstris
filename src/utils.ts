@@ -17,7 +17,7 @@ import TShape from "./tetrominos/TShape";
 import SShape from "./tetrominos/SShape";
 import ZShape from "./tetrominos/SShape";
 
-import { sample } from "lodash";
+import { sample, zip, flattenDeep } from "lodash";
 
 export const emptyLine = (width: number): GridLine => {
   return new Array(width).fill(space);
@@ -90,8 +90,12 @@ export const gridToString = (grid: Grid): string => {
   return [horizontalLine, ...lines, horizontalLine].join("\n");
 };
 
-const repeatString = (character: string, times: number) => {
-  return new Array(times).fill(character).join("");
+const repeat = (character: string, times: number) => {
+  return new Array(times).fill(character)
+}
+
+const repeatString = (character: string, times: number, joinWith: string = "") => {
+  return repeat(character, times).join(joinWith);
 }
 
 export const inBox = (text: string) => {
@@ -109,6 +113,44 @@ export const inBox = (text: string) => {
   })
 
   return [horizontalLine, ...boxed, horizontalLine].join("\n");
+}
+
+export const horizontal = (...sections: string[]) => {
+  const sectionLines = sections.map(section => padSection(section.split("\n")));
+  const tallestColumn = Math.max(...sectionLines.map(it => it.length));
+
+  const combinedSections = sectionLines.map(column => {
+    const paddingLinesLength = tallestColumn - column.length;
+    const widestLength = Math.max(...column.map(it => it.length));
+
+    const paddingLine = repeatString(" ", widestLength);
+    const padding = repeat(paddingLine, paddingLinesLength);
+
+    return [...column, ...padding];
+  })
+
+  return zip(...combinedSections).map(it => it.join(" ")).join("\n");
+}
+
+export const vertical = (...sections: string[]) => {
+  const paddedSections = sections.map(section => padSection(section.split("\n")));
+  const [[firstLine]] = paddedSections;
+  const width = firstLine.length;
+  const paddingLine = repeatString(" ", width);
+
+  return paddedSections.map(section => section.join("\n")).join(`\n${paddingLine}\n`)
+}
+
+const padSection = (column: string[]) => {
+  const widestLine = Math.max(...column.map(it => it.length));
+
+  return column.map(line => {
+    const paddingLength = widestLine - line.length;
+
+    const padding = repeatString(" ", paddingLength);
+    
+    return `${line}${padding}`
+  })
 }
 
 export const linesCleared = (game: Game): number => {

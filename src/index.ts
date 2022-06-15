@@ -1,35 +1,26 @@
 import { Game } from "./types";
 import TetrisGame from "./game/TetrisGame";
 import TetrisGameSession from "./game/TetrisGameSession";
-import {inBox} from "./utils"
+import {inBox, horizontal, vertical} from "./utils"
 
 const render = (game: Game): void => {
-  const gridContainer = document.getElementById("grid");
-  if (gridContainer && game) {
-    gridContainer.innerHTML = game.toString();
-  }
-
-  const gameInfoContainer = document.getElementById("game-info");
-  if (gameInfoContainer && game) {
+  const gameContainer = document.getElementById("game");
+  if (gameContainer && game) {
     const gameInfo = [
-      "Score:",
+      "Score:  ",
       game.score.toString(),
-      "Level:",
+      "Level:  ",
       game.level.toString(),
-      "Lines:",
+      "Lines:  ",
       game.linesCleared.toString(),
     ].join("\n")
-    gameInfoContainer.innerHTML = inBox(gameInfo);
-  }
-  
-  const nextContainer = document.getElementById("next");
-  if (nextContainer && game) {
-    nextContainer.innerHTML = `${inBox(game.nextTetromino.toString())}`;
-  }
-
-  const gameOverContainer = document.getElementById("game-over");
-  if (gameOverContainer && game.gameOver) {
-    gameOverContainer.innerHTML = "Game Over";
+    gameContainer.innerHTML = horizontal(
+      game.toString(), 
+      vertical(
+        inBox(gameInfo), 
+        inBox(game.nextTetromino.toString())
+      )
+    )
   }
 };
 

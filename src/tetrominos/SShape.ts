@@ -95,16 +95,16 @@ export default class SShape implements Tetromino {
       case "North":
         return  [
           "        ",
-          "        ",
+          "  []    ",
           "  [][]  ",
-          "[][]    "
+          "    []  "
         ].join("\n");
       default:
         return  [
           "        ",
-          "[]      ",
-          "[][]    ",
-          "  []    "
+          "        ",
+          "  [][]  ",
+          "[][]    "
         ].join("\n");
     }
   }

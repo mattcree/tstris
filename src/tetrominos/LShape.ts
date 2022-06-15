@@ -139,14 +139,14 @@ export default class LShape implements Tetromino {
           "  []    ",
           "  []    "
         ].join("\n");
-      case "East":
+      case "West":
         return [
           "        ",
           "    []  ",
           "[][][]  ",
           "        "
         ].join("\n");
-      case "West":
+      case "East":
         return [
           "        ",
           "        ",

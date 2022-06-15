@@ -95,16 +95,16 @@ export default class ZShape implements Tetromino {
       case "North":
         return  [
           "        ",
-          "        ",
+          "  []    ",
           "[][]    ",
-          "  [][]  "
+          "[]      "
         ].join("\n");
       default:
         return  [
           "        ",
-          "  []    ",
+          "        ",
           "[][]    ",
-          "[]      "
+          "  [][]  "
         ].join("\n");
     }
   }
